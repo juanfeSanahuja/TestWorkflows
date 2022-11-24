@@ -1,0 +1,17 @@
+name: Pull request TASK
+
+on:
+  push:
+    branches:
+      - "TASK-*"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract Project version
+        id: project
+        run: echo ::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+      - name: Check TASK version
+        run: echo ${{ steps.project.outputs.version }}
