@@ -13,6 +13,6 @@ jobs:
       - name: Extract Project version
         id: project
         run: echo ::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-      - name: Build with Maven deploy
+      - name: Check TASK version
         if: github.event.review.state == 'approved' && contains(steps.project.outputs.version, 'TASK')
         run: exit -1
