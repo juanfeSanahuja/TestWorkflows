@@ -1,9 +1,9 @@
 name: Pull request TASK
 
 on:
-  pull_request_review:
+  push:
     branches:
-      - TASK-*
+      - "TASK-*"
 
 jobs:
   build:
@@ -14,5 +14,4 @@ jobs:
         id: project
         run: echo ::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
       - name: Check TASK version
-        if: github.event.review.state == 'approved' && contains(steps.project.outputs.version, 'TASK')
-        run: exit -1
+        run: echo ${{ steps.project.outputs.version }}
